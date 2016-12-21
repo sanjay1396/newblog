@@ -18,7 +18,7 @@ class LikeController extends Controller {
     public function actionCount($id){
         $counts = Like::model()->findAllByAttributes(array('post_id'=>$id));
         if(!$counts){
-            $this->Error('The id you have entered is invalid');
+            $this->Error( 'The id you have entered is invalid' );
         }
         else {
             $users_data = array();

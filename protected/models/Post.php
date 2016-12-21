@@ -52,7 +52,7 @@ class Post extends CActiveRecord
 
 	public function scopes() {
 		return array(
-			'active' => array('condition'=>'t.status = 1'),
+			'active' => array('condition'=>'t.status = 1'), 
 		);
 	}
 

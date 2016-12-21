@@ -34,7 +34,7 @@ class CommentController extends Controller {
         $comments = Comment::model()->findAll(array('condition'=>"post_id = :post_id", 'params'=>array('post_id'=>$id), 'order'=>'created_at DESC', 'limit'=>5));
         
         if(!$comments){
-            $this->Error('The id you have entered is invalid');
+            $this->Error('The id you have entered is invalid') ;
         }
         
         else {
