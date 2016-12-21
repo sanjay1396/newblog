@@ -41,6 +41,12 @@ class User extends CActiveRecord
 		);
 	}
 
+	public function scopes() {
+		return array(
+			'active' => array('condition'=>'t.status = 1'),
+		) ;
+	}
+
 	public function beforeSave() {
 		if($this->isNewRecord) {
 			$this->status = self::STATUS_ACTIVE;
