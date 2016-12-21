@@ -24,7 +24,7 @@ class CommentController extends Controller {
 		else {
 			$users_data = array();
 			foreach ($counts as $count) {
-			$users_data[] = array('user_id'=>$count->user_id,'user_name'=>$count->user->name);
+				$users_data[] = array('user_id'=>$count->user_id,'user_name'=>$count->user->name);
 			}
 			$this->Success(array('no_of_comments'=>count($counts),'users_data'=>$users_data));
 		}
@@ -40,7 +40,7 @@ class CommentController extends Controller {
 		else {
 			$comments_data = array();
 			foreach($comments as $comment){
-			$comments_data[] = array('user_name'=>$comment->user->name, 'content'=>$comment->content);
+				$comments_data[] = array('user_name'=>$comment->user->name, 'content'=>$comment->content);
 			}
 			$this->Success(array('comments_information'=>$comments_data));
 		}
@@ -60,14 +60,14 @@ class CommentController extends Controller {
 		$this->Success(array('Successfully Restored'));
 	}
 
-   public function actionUpdate($str, $id){
-	 $comment = Comment::model()->findByPk($id);
-	 $temp = Comment::model();
-	 if($comment->status == 1){
-		$temp->content=$comment->content;
-		$comment->content = $str;
-		$comment->save();
-		$this->Success(array('Successfully updated','old_comment_content'=>$temp->content,'Updated_comment_content'=>$comment->content));
-	 }
-   }
+	public function actionUpdate($str, $id){
+		$comment = Comment::model()->findByPk($id);
+		$temp = Comment::model();
+		if($comment->status == 1){
+			$temp->content=$comment->content;
+			$comment->content = $str;
+			$comment->save();
+			$this->Success(array('Successfully updated','old_comment_content'=>$temp->content,'Updated_comment_content'=>$comment->content));
+		}
+	}
 }

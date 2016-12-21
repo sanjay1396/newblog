@@ -16,7 +16,7 @@ class m161221_060145_post extends CDbMigration
 				'updated_at' => 'int(11)',
 				'PRIMARY KEY (id)',
 				),
-				'ENGINE=InnoDB'
+			'ENGINE=InnoDB'
 			);
 	}
 
