@@ -4,7 +4,7 @@ class Controller extends CController {
 
     public function ModelErrorMessage($model, $implode_by='<br />') {
         $messages = array();
-        foreach($model->errors as $error)
+        foreach($model->errors as $error )
             $messages[] = $error[0];
         return implode($implode_by, $messages);
     }

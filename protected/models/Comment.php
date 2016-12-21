@@ -35,7 +35,7 @@ class Comment extends CActiveRecord
 		return array(
 			'post'=>array(self::BELONGS_TO, 'Post', 'post_id'),
 			'user'=>array(self::BELONGS_TO, 'User', 'user_id')
-		);
+		) ;
 	}
 
 	public function beforeSave() {

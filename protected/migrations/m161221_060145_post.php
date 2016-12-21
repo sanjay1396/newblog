@@ -22,6 +22,6 @@ class m161221_060145_post extends CDbMigration
 
 	public function safeDown()
 	{
-		$this->dropTable('post');
+		$this->dropTable('post') ;
 	}
 }

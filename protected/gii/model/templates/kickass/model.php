@@ -23,8 +23,8 @@
  * @property <?php
 	if (preg_match("~^array\(self::([^,]+), '([^']+)', '([^']+)'\)$~", $relation, $matches))
     {
-        $relationType = $matches[1];
-        $relationModel = $matches[2];
+        $relationType = $matches[1] ;
+        $relationModel = $matches[2] ;
 
         switch($relationType){
             case 'HAS_ONE':
