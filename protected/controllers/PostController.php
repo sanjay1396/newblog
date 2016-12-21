@@ -34,7 +34,7 @@ class PostController extends Controller {
 
 	public function actionComments($id) {
 			$post = Post::model()->findbyPK($id);
-			if(!$post){
+			if(!$this->_post){
 				$this->Error('The id you have entered is invalid');
 			}
 			else {
@@ -49,7 +49,7 @@ class PostController extends Controller {
 
 	public function actionLikes($id) {
 			$post = Post::model()->findByPK($id);
-			if(!$post){
+			if(!$this->_post){
 				$this->Error('The id you have entered is invalid');
 			}
 			else {
@@ -84,7 +84,27 @@ class PostController extends Controller {
 		}
 		else {
 			$this->Success(array('post_id'=>$post->id,'post_title'=>$post->title,'post_content'=>$post->content));
-			/*echo CJSON::encode(array('post_id'=>$post->id,'post_title'=>$post->title,'post_content'=>$post->content));*/
 		}
+	}
+
+	public function actionDelete($id){
+		$post = Post::model()->findByPk($id);
+		$post->status = 2;
+		$post->save();
+		$this->Success(array('successfully Deleted the post with th id'=>$id));
+	}
+	public function actionrestore($id){
+		$post = Post::model()->findByPk($id);
+		$post->status = 1;
+		$post->save();
+		$this->Success(array('successfully Restored the Post with id'=>$id));
+	}
+
+	public function actionUpdate($str, $id){
+		$post = Post::model()->findByPk($id);
+		$temp = Post::model();
+		$temp->content = $post->content;
+		$post->content = $str;
+		$this->Success(array('successfully updated the post content from'=>$temp->content,'to '=>$post->content));
 	}
 }
