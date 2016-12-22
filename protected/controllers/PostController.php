@@ -5,7 +5,7 @@ class PostController extends Controller {
 
 	public function filters() {
 		return array(
-			'checkUser + view, comments, likes,delete,update'
+			'checkUser + view, comments, likes,Deactivate,update'
 			);
 	}
 
@@ -34,13 +34,12 @@ class PostController extends Controller {
 	}
 
 	public function actionComments($id) {
-		$post = Post::model()->findbyPK($id);
 		if(!$this->_post){
 			$this->Error('The id you have entered is invalid');
 		}
 		else {
 			$post_comments = array();
-			$comments = $post->comments;
+			$comments = $this->_post->comments;
 			foreach ($this->_post->comments as $comment) {
 				$post_comments[] = array('comment_id'=>$comment->id,'comment_post_id'=>$comment->post_id,'comment_user_id'=>$comment->user_id,'comment_content'=>$comment->content);
 			}
@@ -49,13 +48,12 @@ class PostController extends Controller {
 	}
 
 	public function actionLikes($id) {
-		$post = Post::model()->findByPK($id);
 		if(!$this->_post){
 			$this->Error('The id you have entered is invalid');
 		}
 		else {
 			$post_likes = array();
-			$likes = $post->likes;
+			$likes = $this->_post->likes;
 			foreach ($this->_post->likes as $like){
 				$post_likes[] = array('like_post_id'=>$like->post_id,'like_user_id'=>$like->user_id);
 			}
@@ -100,11 +98,12 @@ class PostController extends Controller {
 		}
 	}
 
-	public function actionDelete($id){
+	public function actionDeactivate($id){
 		$this->_post->status = 2;
 		$this->_post->save();
 		$this->Success(array('successfully Deleted the post with th id'=>$id));
 	}
+
 	public function actionrestore($id){
 		$post = Post::model()->findByPk($id);
 		$post->status = 1;

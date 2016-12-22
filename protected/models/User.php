@@ -43,7 +43,7 @@
 
  	public function scopes() {
  		return array(
- 			'active' => array('condition'=>'t.status = 1'),
+ 			'active' => array('condition'=>"{$this->tableAlias}.status = :act", 'params'=>array('act'=>self::STATUS_ACTIVE))
  			) ;
  	}
 

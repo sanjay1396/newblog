@@ -91,8 +91,7 @@ class UserController extends Controller {
 		}
 	}
 
-	public function actionDelete($id) {
-		//$user = User::model()->findByPk($id);
+	public function actionDeactivate($id) {
 		$this->_user->status = 2;
 		$this->_user->save();
 		$this->Success(array('Successfully Deleted'));

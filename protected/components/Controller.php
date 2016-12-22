@@ -15,7 +15,6 @@ class Controller extends CController {
 
 	public function Error($error_message) {
 		echo CJSON::encode(array('status'=>'ERROR', 'message'=>$error_message));
-		//exit();
+		exit();
 	}
-
 }

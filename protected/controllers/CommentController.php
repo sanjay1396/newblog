@@ -32,7 +32,6 @@ class CommentController extends Controller {
 
 	public function actionTopComments($id){
 		$comments = Comment::model()->findAll(array('condition'=>"post_id = :post_id", 'params'=>array('post_id'=>$id), 'order'=>'created_at DESC', 'limit'=>5));
-		
 		if(!$comments){
 			$this->Error('The id you have entered is invalid') ;
 		}
@@ -46,7 +45,7 @@ class CommentController extends Controller {
 		}
 	}
 	
-	public function actionDelete($id){
+	public function actionDeactivate($id){
 		$comment = Comment::model()->findByPk($id);
 		$comment->status = 2;
 		$comment->save();
