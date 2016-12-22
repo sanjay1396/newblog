@@ -25,8 +25,6 @@ class LikeController extends Controller {
 			foreach ($counts as $count) {
 			 $users_data[] = array('user_id'=>$count->user_id,'user_name'=>$count->user->name);
 		 }
-	   //echo "No. of Likes = ".count($counts)."  "."<br>";
-	   //echo CJSON::encode(array('status'=>'SUCCESS','users_data'=>$users_data,));
 		 $this->Success(array('no_of_likes'=>count($counts),'users_data'=>$users_data));
 	 }
  }

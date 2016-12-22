@@ -63,6 +63,20 @@ class UserController extends Controller {
 		}
 	}
 
+	public function actionSearch($str) {
+		$posts = Post::model()->findAll(array('condition'=>"content LIKE :str", 'params'=>array('str'=>"%$str%")));
+		if(!$posts){
+			$this->Error('Invalid data...!');
+		}
+		else {
+			$posts_data = array();
+			foreach ($posts as $post) {
+			$posts_data[] = array('id'=>$post->id, 'content'=>$post->content);
+			}
+			$this->Success(array('posts_data'=>$posts_data));
+		}
+	}
+
 	public function actionLikes($id) {
 		if(!$this->_user){
 			$this->Error('The id you have entered is invalid');
