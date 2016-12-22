@@ -71,7 +71,7 @@ class UserController extends Controller {
 		else {
 			$posts_data = array();
 			foreach ($posts as $post) {
-			$posts_data[] = array('id'=>$post->id, 'content'=>$post->content);
+				$posts_data[] = array('id'=>$post->id, 'content'=>$post->content);
 			}
 			$this->Success(array('posts_data'=>$posts_data));
 		}
@@ -83,11 +83,11 @@ class UserController extends Controller {
 		}
 		else {
 			$user_likes = array();
-		$likes = $this->_user->likes;
-		foreach ($likes as $like){
-			$user_likes[] = array('like_id'=>$like->id,'like_user_id'=>$like->user_id,'like_post_id'=>$like->post_id);
-		}
-		$this->Success(array('users_likes'=>$user_likes));
+			$likes = $this->_user->likes;
+			foreach ($likes as $like){
+				$user_likes[] = array('like_id'=>$like->id,'like_user_id'=>$like->user_id,'like_post_id'=>$like->post_id);
+			}
+			$this->Success(array('users_likes'=>$user_likes));
 		}
 	}
 

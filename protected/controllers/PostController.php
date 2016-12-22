@@ -85,7 +85,7 @@ class PostController extends Controller {
 		else {
 			$posts_data = array();
 			foreach ($posts as $post) {
-			$posts_data[] = array('id'=>$post->id, 'content'=>$post->content);
+				$posts_data[] = array('id'=>$post->id, 'content'=>$post->content);
 			}
 			$this->Success(array('posts_data'=>$posts_data));
 		}

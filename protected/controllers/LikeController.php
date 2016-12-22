@@ -23,9 +23,9 @@ class LikeController extends Controller {
 		else {
 			$users_data = array();
 			foreach ($counts as $count) {
-			 $users_data[] = array('user_id'=>$count->user_id,'user_name'=>$count->user->name);
-		 }
-		 $this->Success(array('no_of_likes'=>count($counts),'users_data'=>$users_data));
-	 }
- }
+				$users_data[] = array('user_id'=>$count->user_id,'user_name'=>$count->user->name);
+			}
+			$this->Success(array('no_of_likes'=>count($counts),'users_data'=>$users_data));
+		}
+	}
 }
