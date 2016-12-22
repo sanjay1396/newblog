@@ -21,8 +21,6 @@ class PostController extends Controller {
 	}
 
 	public function actionCreate() {
-		//var_dump($_POST);
-		//exit();
 		if(isset($_POST['Post'])) {
 			$post = Post::create($_POST['Post']);
 			if(!$post->errors) {
@@ -81,7 +79,6 @@ class PostController extends Controller {
 	}
 
 	public function actionView($id){
-		//$post=Post::model()->findbyPK($id);
 		if(!$this->_post){
 			$this->Error('No post with such id');
 		}
@@ -91,7 +88,6 @@ class PostController extends Controller {
 	}
 
 	public function actionDelete($id){
-		//$post = Post::model()->findByPk($id);
 		$this->_post->status = 2;
 		$this->_post->save();
 		$this->Success(array('successfully Deleted the post with th id'=>$id));
@@ -104,7 +100,6 @@ class PostController extends Controller {
 	}
 
 	public function actionUpdate($str, $id){
-		//$post = Post::model()->findByPk($id);
 		$temp = Post::model();
 		$temp->content = $this->_post->content;
 		$this->_post->content = $str;
