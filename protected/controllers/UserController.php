@@ -34,12 +34,19 @@ class UserController extends Controller {
 			$this->Error('Enter the user data first...!!');
 		}
 	}
-
-	public function actionLogin($id) {
-		if(!$this->_user){
-			echo "Account doesn't exist";
+	
+	public function actionLogin($id,$mail,$pass) {
+		$user = User::model()->active()->findByPk($id);
+		if(!$user){
+			$this->Error('Account doesnt exist');
 		}
-		else $this->Success(array('You are Successfully loggedin into'=>$this->_user->id,'user_name'=>$this->_user->name));
+		else if ($user->email != $mail){
+			$this->Error('Check Your Details...!!');
+		}
+		else if($user->password != $pass){
+			$this->Error('Check Your Details...!!');
+		}
+		else $this->Success(array('You are Successfully loggedin into'=>$user->id,'user_name'=>$user->name));
 	}
 
 	public function actionView($id) {

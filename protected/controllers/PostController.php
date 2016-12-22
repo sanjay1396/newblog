@@ -17,7 +17,7 @@ class PostController extends Controller {
 			$this->_post = Post::model()->active()->findByPk($_GET['id']);
 			if(!$this->_post){
 				$this->Error("Invalid Data...!!");
-			} 
+			}
 		}
 		$filterChain->run();
 	}
