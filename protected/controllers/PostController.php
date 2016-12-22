@@ -57,7 +57,6 @@ class PostController extends Controller {
 			$post_likes = array();
 			$likes = $post->likes;
 			foreach ($this->_post->likes as $like){
-					//echo $like->user_id;
 				$post_likes[] = array('like_post_id'=>$like->post_id,'like_user_id'=>$like->user_id);
 			}
 			$this->Success(array('posts_likes'=>$post_likes));
@@ -78,12 +77,26 @@ class PostController extends Controller {
 		}
 	}
 
+	public function actionSearch($str) {
+		$posts = Post::model()->findAll(array('condition'=>"content LIKE :str", 'params'=>array('str'=>"%$str%")));
+		if(!$posts){
+			$this->Error('Invalid data...!');
+		}
+		else {
+			$posts_data = array();
+			foreach ($posts as $post) {
+			$posts_data[] = array('id'=>$post->id, 'content'=>$post->content);
+			}
+			$this->Success(array('posts_data'=>$posts_data));
+		}
+	}
+
 	public function actionView($id){
 		if(!$this->_post){
 			$this->Error('No post with such id');
 		}
 		else {
-			$this->Success(array('post_id'=>$post->id,'post_title'=>$post->title,'post_content'=>$post->content));
+			$this->Success(array('post_id'=>$this->_post->id,'post_title'=>$this->_post->title,'post_content'=>$this->_post->content));
 		}
 	}
 

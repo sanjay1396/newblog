@@ -36,15 +36,13 @@ class UserController extends Controller {
 	}
 
 	public function actionLogin($id) {
-		//$user = User::model()->findbyPK($id);
 		if(!$this->_user){
 			echo "Account doesn't exist";
 		}
-		else $this->Success(array('You are Successfully loggedin into'=>$this->_user->id));
+		else $this->Success(array('You are Successfully loggedin into'=>$this->_user->id,'user_name'=>$this->_user->name));
 	}
 
 	public function actionView($id) {
-		//$user = User::model()->findbyPK($id);
 		if(!$this->_user) {
 			echo "Account doesn't exist";
 		}
@@ -52,7 +50,6 @@ class UserController extends Controller {
 	}
 
 	public function actionComments($id) {
-			//$user = User::model()->findbyPK($id);
 		if(!$this->_user){
 			$this->Error('The id you have entered is invalid');
 		}
@@ -67,24 +64,17 @@ class UserController extends Controller {
 	}
 
 	public function actionLikes($id) {
-			//$users = User::model()->findByPK($id);
-		$user_likes = array();
+		if(!$this->_user){
+			$this->Error('The id you have entered is invalid');
+		}
+		else {
+			$user_likes = array();
 		$likes = $this->_user->likes;
 		foreach ($likes as $like){
 			$user_likes[] = array('like_id'=>$like->id,'like_user_id'=>$like->user_id,'like_post_id'=>$like->post_id);
 		}
 		$this->Success(array('users_likes'=>$user_likes));
-	}
-
-	public function actionSearch($str) {
-		
-		$posts = Post::model()->findAll(array('condition'=>"content LIKE :str", 'params'=>array('str'=>"%$str%")));
-		//echo count($posts);
-		$posts_data = array();
-		foreach ($posts as $post) {
-			$posts_data[] = array('id'=>$post->id, 'content'=>$post->content);
 		}
-		$this->Success(array('posts_data'=>$posts_data));
 	}
 
 	public function actionDelete($id) {
