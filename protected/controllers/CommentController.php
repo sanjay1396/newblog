@@ -26,7 +26,7 @@ class CommentController extends Controller {
 			foreach ($counts as $count) {
 				$users_data[] = array('user_id'=>$count->user_id,'user_name'=>$count->user->name);
 			}
-			$this->Success(array('no_of_comments'=>count($counts),'users_data'=>$users_data));
+			$this->Success(array('no_of_comments'=>count($counts)));
 		}
 	}
 
@@ -47,15 +47,13 @@ class CommentController extends Controller {
 	
 	public function actionDeactivate($id){
 		$comment = Comment::model()->findByPk($id);
-		$comment->status = 2;
-		$comment->save();
-		$this->Success(array('Successfully Deleted'));
+		$comment->deactivate();
+		$this->Success(array('Successfully Deactivate'));
 	}
 
 	public function actionRestore($id){
 		$comment = Comment::model()->findByPk($id);
-		$comment->status = 1;
-		$comment->save();
+		$comment->restore();
 		$this->Success(array('Successfully Restored'));
 	}
 

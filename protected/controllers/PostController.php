@@ -5,7 +5,7 @@ class PostController extends Controller {
 
 	public function filters() {
 		return array(
-			'checkUser + view, comments, likes,Deactivate,update'
+			'checkUser + view, comments, likes,Deactivate,update,topcomments'
 			);
 	}
 
@@ -38,26 +38,39 @@ class PostController extends Controller {
 			$this->Error('The id you have entered is invalid');
 		}
 		else {
+			$no_of_comments=0;
 			$post_comments = array();
 			$comments = $this->_post->comments;
-			foreach ($this->_post->comments as $comment) {
-				$post_comments[] = array('comment_id'=>$comment->id,'comment_post_id'=>$comment->post_id,'comment_user_id'=>$comment->user_id,'comment_content'=>$comment->content);
+			foreach ($this->_post->comments('comments:active') as $comment) {
+				$no_of_comments++;
+				$post_comments[] = array('comment_id'=>$comment->id,'comment_user_id'=>$comment->user_id,'comment_content'=>$comment->content,'created_at'=>$comment->created_at);
 			}
-			$this->Success(array('post_comments'=>$post_comments));
+			$this->Success(array('no_of_comments'=>$no_of_comments,'post_comments'=>$post_comments));
 		}
 	}
+
+	public function actionTopComments($id){
+		$comments_data = array();
+		foreach ($this->_post->comments(array('scopes'=>'active', 'order'=>'created_at DESC', 'limit'=>5)) as $comment) {
+			$comments_data[] = array('user_name'=>$comment->user->name, 'content'=>$comment->content, 'created_at'=>$comment->created_at);
+		}
+		$this->Success(array('comments'=>$comments_data));
+	}
+
 
 	public function actionLikes($id) {
 		if(!$this->_post){
 			$this->Error('The id you have entered is invalid');
 		}
 		else {
+			$no_of_likes=0;
 			$post_likes = array();
 			$likes = $this->_post->likes;
-			foreach ($this->_post->likes as $like){
-				$post_likes[] = array('like_post_id'=>$like->post_id,'like_user_id'=>$like->user_id);
+			foreach ($this->_post->likes('likes:active') as $like){
+				$no_of_likes++;
+				$post_likes[] = array('like_post_id'=>$like->post_id,'like_user_id'=>$like->user_id,'created_at'=>$like->created_at);
 			}
-			$this->Success(array('posts_likes'=>$post_likes));
+			$this->Success(array('no_of_likes'=>$no_of_likes, 'posts_likes'=>$post_likes));
 		}
 	}
 	
@@ -89,6 +102,16 @@ class PostController extends Controller {
 		}
 	}
 
+	public function actionCommentscount($id) {
+		$comments_data = array();
+		$number_of_comments = 0;
+		foreach ($this->_post->comments('comments:active') as $comment) {
+			$number_of_comments++;
+			$comments_data[] = array('user_id'=>$comment->user_id, 'content'=>$comment->content);
+		}
+		$this->Success(array('number_of_comments'=> $number_of_comments,'comments'=>$comments_data));
+	}
+
 	public function actionView($id){
 		if(!$this->_post){
 			$this->Error('No post with such id');
@@ -99,15 +122,13 @@ class PostController extends Controller {
 	}
 
 	public function actionDeactivate($id){
-		$this->_post->status = 2;
-		$this->_post->save();
-		$this->Success(array('successfully Deleted the post with th id'=>$id));
+		$this->_post->deactivate();
+		$this->Success(array('successfully Decactivated the post with th id'=>$id));
 	}
 
 	public function actionrestore($id){
 		$post = Post::model()->findByPk($id);
-		$post->status = 1;
-		$post->save();
+		$post->restore();
 		$this->Success(array('successfully Restored the Post with id'=>$id));
 	}
 

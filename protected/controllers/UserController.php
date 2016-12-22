@@ -5,7 +5,7 @@ class UserController extends Controller {
 
 	public function filters() {
 		return array(
-			'checkUser + login, view, comments, likes, delete'
+			'checkUser + login, view, comments, likes, Deactivate'
 			);
 	}
 
@@ -94,7 +94,7 @@ class UserController extends Controller {
 	public function actionDeactivate($id) {
 		$this->_user->status = 2;
 		$this->_user->save();
-		$this->Success(array('Successfully Deleted'));
+		$this->Success(array('Successfully Deactivate the User'));
 	}
 
 	public function actionRestore($id) {

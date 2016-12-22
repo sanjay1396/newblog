@@ -38,6 +38,22 @@
  			) ;
  	}
 
+ 	public function deactivate() {
+		$this->status = 2;
+		$this->save();
+	}
+
+	public function restore() {
+		$this->status = 1;
+		$this->save();
+	}
+
+	public function scopes() {
+		return array(
+			'active' => array('condition'=>"{$this->tableAlias}.status = :act", 'params'=>array('act'=>self::STATUS_ACTIVE))
+			) ;
+	}
+
  	public function beforeSave() {
  		if($this->isNewRecord) {
  			$this->status = self::STATUS_ACTIVE ;
