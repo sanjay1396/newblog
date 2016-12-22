@@ -5,17 +5,19 @@ class PostController extends Controller {
 
 	public function filters() {
 		return array(
-			'checkUser + view, comments, likes,Deactivate,update,topcomments'
-			);
+			'checkPost + view, comments, likes, deactivate, update, topcomments'
+		);
 	}
 
-	public function filterCheckUser($filterChain) {
+	public function filterCheckPost($filterChain) {
 		if(!isset($_GET['id'])) {
 			$this->Error('Invalid data...!!');
 		}
 		else {
 			$this->_post = Post::model()->active()->findByPk($_GET['id']);
-			if(!$this->_post) $this->Error("Invalid Data...!!");
+			if(!$this->_post){
+				$this->Error("Invalid Data...!!");
+			} 
 		}
 		$filterChain->run();
 	}

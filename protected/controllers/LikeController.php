@@ -1,20 +1,6 @@
 <?php
 class LikeController extends Controller {
 
-/*	public function actionCreate() {
-		if(isset($_POST['Like'])) {
-			$like = Like::create($_POST['Like']);
-			if(!$like->errors) {
-				$this->Success(array('Liked Successfully'));
-				//echo "Liked Successfully";
-			} else {
-				$this->Error($this->ModelErrorMessage($like));
-			}
-		} else {
-			$this->Error('Please Send the like data first...!!');
-		}
-	}
-*/
 	 public function actionCreate() {
        if(isset($_POST['Like'])) {
            $existing_like = Like::model()->findByAttributes(array('user_id'=>$_POST['Like']['user_id'],'post_id'=>$_POST['Like']['post_id']));
